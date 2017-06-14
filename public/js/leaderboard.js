@@ -2,20 +2,28 @@ $(document).ready(function() {
 
   $.ajax({
     type: "GET",
-    url: "api/users?team_id=59408e751865720006b81b9d",
+    url: "api/season?team_id=59408e751865720006b81b9d",
     success: function(data) {
-      var users_count = 0;
-      var matches_count = 0;
-      for (var user in data.users) {
-        game = data.games[game];
-        active_teams_count += game.active_teams_count;
-        users_count += game.users_count;
-        matches_count += game.matches_count;
+      for (var user in data.users_ranks) {
+        if(user.winning_streak != 0) {
+          user.streak = 'W' + user.winning_streak;
+        } else {
+          user.streak = 'L' + user.losing_streak
+        }
+        if(user.rank) {
+          ranked_users.append(user);
+        }
       }
-      $('#matches').hide().text(
-        active_teams_count + " active teams with " + matches_count + ' games played by ' + users_count + " players!"
-      ).fadeIn('slow');
+
+      var users_count = ranked_users.count;
+
+      var table = $('<table></table>').addClass('leaderboard');
+      $table.append( '<th><td>' + 'Rank' + '</td><td>' + 'Name' + '</td><td>'+ 'ELO' + '</td><td>' + 'Wins' + '</td><td>' + 'Loses' + '</td><td>' + "Streak" + '</td></th>' );
+      for(var user in ranked_users){
+         $table.append( '<tr><td>' + user.rank + '</td><td>' + user.user_name + '</td><td>'+ (user.elo + 1200) + '</td><td>' + user.wins + '</td><td>' + user.loses + '</td><td>' + user.streak + '</td></tr>' );
+      }
+
+      $('#leaderboard').append(table);
     },
   });
-
 });
