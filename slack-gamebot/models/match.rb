@@ -65,6 +65,21 @@ class Match
     User.rank!(team)
   end
 
+  def self.convert_pinpon_score!(winner_name, loser_name, score)
+    winner = User.where(user_name: winner_name)
+    loser = User.where(user_name: loser_name)
+    if score == '2:1'
+      scores = [[19,21],[21,19],[19,21]]
+    elsif score == '2:0'
+      scores = [[19,21],[19,21]]
+    elsif score == '1:0'
+      scores = [[19,21]]
+    else
+      scores = [[19,21],[21,19],[19,21]]
+    end
+    Match.lose!(team: Team.first, winners: [winner], losers: [loser], scores: scores)
+  end
+
   private
 
   def validate_teams
