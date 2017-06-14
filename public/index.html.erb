@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="description" content="Game bots for Slack teams. Ping pong bot, chess bot, pool bot and tic-tac-toe bot for Slack. Challenges and rankings.">
-        <meta name="og:description" content="Game bots for Slack teams. Ping pong bot, chess bot, pool bot and tic-tac-toe bot for Slack. Challenges and rankings.">
-        <meta name="keywords" content="slack,ping,pong,ping-pong,chess,pool,billiards,tic-tac-toe,slack,bot,leaderboard">
-        <title>PlayPlay.io - Ping Pong Bot, Chess Bot, Pool Bot and Tic Tac Toe Bot for Slack</title>
+        <title>SigPong</title>
         <%= partial 'public/partials/_head.html' %>
     </head>
     <body id="page-top" class="index">
         <div class="container">
-            <div id="leaderboard"></div>
-            <div id="recent-matches"></div>
+            <div id="leaderboard">
+                <h1>Leaderboard</h1>
+            </div>
+            <div id="recent-matches">
+                <h1>Recent Matches</h1>
+            </div>
         </div>
         <%= partial 'public/partials/_scripts.html' %>
         <!-- Slack -->
