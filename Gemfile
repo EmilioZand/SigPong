@@ -17,9 +17,9 @@ gem 'stripe'
 gem 'kaminari-grape'
 gem 'giphy'
 gem 'hashie', '3.4.6'
+gem 'rake', '~> 10.4' 
 
 group :development, :test do
-  gem 'rake', '~> 10.4'
   gem 'rubocop', '0.34.2'
   gem 'foreman'
   gem 'stripe-ruby-mock', require: 'stripe_mock'
