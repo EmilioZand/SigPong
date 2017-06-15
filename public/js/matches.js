@@ -12,7 +12,7 @@ $(document).ready(function() {
         var games = match.scores;
         var loserScore = 0;
         var winnerScore = 0;
-        var eloChange = match.winners[0].elo_history.pop();
+        var eloChange = match.winners[0].elo_history.pop() - match.winners[0].elo_history.pop();
         for(score in games){
           score[0] > score[1] ? loserScore++ : winnerScore++;
         }
