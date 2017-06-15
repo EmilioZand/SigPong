@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $.ajax({
     type: "GET",
-    url: "api/users?team_id=59408e751865720006b81b9d",
+    url: "api/users?team_id=59408e751865720006b81b9d&size=100",
     success: function(data) {
       var users = data._embedded.users;
       var table = $('<table></table>').addClass('table leaderboard');
