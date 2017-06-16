@@ -8,6 +8,7 @@ class Match
   field :tied, type: Boolean, default: false
   field :resigned, type: Boolean, default: false
   field :scores, type: Array
+  field :elo_change, type: Integer
   belongs_to :challenge, index: true
   belongs_to :season, inverse_of: :matches, index: true
   before_create :calculate_elo!
@@ -144,7 +145,8 @@ class Match
     winners.each do |winner|
       e = 100 - 1.0 / (1.0 + (10.0**((losers_elo - winner.elo) / 400.0))) * 100
       winner.tau += 0.5
-      winner.elo += e * ratio * (Elo::DELTA_TAU**winner.tau) * winners_ratio
+      self.elo_change = e * ratio * (Elo::DELTA_TAU**winner.tau) * winners_ratio
+      winner.elo += self.elo_change
       winner.save!
     end
 

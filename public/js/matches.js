@@ -12,12 +12,11 @@ $(document).ready(function() {
         var games = match.scores;
         var loserScore = 0;
         var winnerScore = 0;
-        var eloChange = match.winners[0].elo_history.pop() - match.winners[0].elo_history.pop();
         for(var j=0;j<games.length;j++){
           games[j][0] > games[j][1] ? loserScore++ : winnerScore++;
         }
         var overallScore = winnerScore + ' : ' + loserScore
-        table.append( '<tr><td>' + match.winners[0].user_name + '</td><td>' + match.losers[0].user_name + '</td><td>'+ overallScore + '</td><td>' + eloChange + '</td></tr>' );
+        table.append( '<tr><td>' + match.winners[0].user_name + '</td><td>' + match.losers[0].user_name + '</td><td>'+ overallScore + '</td><td>' + (match.elo_change || '') + '</td></tr>' );
       }
       $('#recent-matches').append(table);
     },
