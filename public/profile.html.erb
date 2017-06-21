@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>SigPong</title>
+        <%= partial 'public/partials/_head.html' %>
+    </head>
+    <body id="page-top" class="index">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6" id="profile">
+                    <h1 id="user-name"></h1>
+                    <div class="row">
+                        <div class="col-sm-4" id="wins"></div>
+                        <div class="col-sm-4" id="losses"></div>
+                        <div class="col-sm-4" id="elo"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" id="win-streak">LWS: </div>
+                        <div class="col-sm-6" id="lose-streak">LLS: </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" id="recent-matches">>
+                    <h2>Recent Matches</h2>
+                </div>
+        </div>
+        <%= partial 'public/partials/_scripts.html' %>
+    </body>
+</html>
