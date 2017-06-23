@@ -15,6 +15,24 @@ module Score
     scores.count { |score| score[0] < score[1] } > scores.count / 2
   end
 
+   def self.lost?(scores)
+    scores.count { |score| score[0] < score[1] } > scores.count / 2
+  end
+
+  def self.is_valid?(scores)
+    scores.count { |score| score[0] < score[1] } > scores.count / 2 || scores.count { |score| score[1] < score[0] } > scores.count / 2
+  end
+
+  def self.reverse_scores(scores)
+    scores.each do |score|
+      temp = score[0]
+      score[0] = score[1]
+      score[1] = temp
+    end
+    scores
+  end
+
+
   # draw scores?
   def self.tie?(scores)
     points = Score.points(scores)
@@ -56,6 +74,16 @@ module Score
       scores.count > 1 ? 'the scores of' : 'the score of',
       scores.map do |score|
         "#{score[1]}:#{score[0]}"
+      end
+    ].flatten.join(' ')
+  end
+
+
+  def self.reporter_first_scores_to_string(scores)
+    [
+      scores.count > 1 ? 'the scores of' : 'the score of',
+      scores.map do |score|
+        "#{score[0]}:#{score[1]}"
       end
     ].flatten.join(' ')
   end
