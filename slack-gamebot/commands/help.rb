@@ -17,10 +17,10 @@ sucks: express some frustration
 Games
 -----
 challenge <opponent>, ... [with <teammate>, ...]: challenge opponent(s) to a game
-accept: accept a challenge
-decline: decline a previous challenge
-cancel: cancel a previous challenge
-lost [to <opponent>] [score, ...]: record your loss
+report <opponent> [score, ...]: record a game
+confirm <reporter>: confirm a reported score
+contest <reporter>: contest a reported score
+cancel: cancel a previous report
 resigned [to <opponent>]: record a resignation
 draw: record a tie
 

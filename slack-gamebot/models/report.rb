@@ -95,7 +95,7 @@ class Report
   end 
 
   def to_s
-    "#{reporters.first.display_name} has claimed they #{score_verb} #{opponents.first.display_name} with #{Score.reporter_first_scores_to_string(scores)}.
+    "#{reporters.first.display_name} has claimed they #{score_verb} #{opponents.first.display_name} #{Score.match_score_to_string(scores)} with #{Score.reporter_first_scores_to_string(scores)}.
 I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`."
   end
 
@@ -114,6 +114,15 @@ I need #{opponents.first.display_name} to confirm by typing `pp confirm #{create
     Report.any_of(
       { opponent_ids: player._id }
     ).where(
+      team: team,
+      channel: channel,
+      :state.in => states
+    ).first
+  end
+
+  def self.find_by_reporter(team, channel, player, states = [ReportState::PROPOSED])
+    Report.where(
+      created_by: player,
       team: team,
       channel: channel,
       :state.in => states
@@ -162,7 +171,7 @@ I need #{opponents.first.display_name} to confirm by typing `pp confirm #{create
       return if updated_by && opponents.include?(updated_by)
       errors.add(:declined_by, "Only #{opponents.map(&:user_name).and} can contest this report.")
     when ReportState::CANCELLED
-      return if updated_by && (opponents.include?(updated_by) || reporter == updated_by)
+      return if updated_by && (opponents.include?(updated_by) || reporters.include?(updated_by))
       errors.add(:declined_by, "Only #{reporters.map(&:user_name).and} or #{opponents.map(&:user_name).and} can cancel this report.")
     end
   end

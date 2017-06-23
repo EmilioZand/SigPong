@@ -69,6 +69,15 @@ module Score
     end
   end
 
+  def self.match_score_to_string(scores)
+    p1 = 0
+    p2 = 0
+    scores.each do |score|
+      (score[0] > score[1]) ? p1+=1 : p2+=1
+    end
+     "#{p1}:#{p2}"
+  end
+
   def self.scores_to_string(scores)
     [
       scores.count > 1 ? 'the scores of' : 'the score of',

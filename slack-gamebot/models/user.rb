@@ -67,6 +67,16 @@ class User
     user_names.map { |user| find_by_slack_mention!(team, user) }
   end
 
+  def self.find_challenger(user)
+     criteria = User.ranked.where(
+      :user_name.nin => [user.user_name],
+      :rank.gte => user.rank-3,
+      :rank.lte => user.rank+3,
+      team: user.team
+    )
+    random_user = criteria.skip(rand(criteria.count)).first
+  end
+
   # Find an existing record, update the username if necessary, otherwise create a user record.
   def self.find_create_or_update_by_slack_id!(client, slack_id)
     instance = User.where(team: client.owner, user_id: slack_id).first

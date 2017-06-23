@@ -72,6 +72,17 @@ class Challenge
     )
   end
 
+  def self.create_unofficial_challenge(team, channel, challenger, names, separator = 'with')
+    teammates, opponents = split_teammates_and_opponents(team, challenger, names, separator)
+    if(opponents.empty?)
+      random_opponent =  User.find_challenger(challenger)
+      challenge_string = "#{teammates.map(&:user_name).and} should challenge #{random_opponent.user_name} to a match!"
+    else
+      challenge_string = "#{teammates.map(&:user_name).and} challenged #{opponents.map(&:user_name).and} to a match!"
+    end
+    challenge_string
+  end
+
   def accept!(challenger)
     fail SlackGamebot::Error, "Challenge has already been #{state}." unless state == ChallengeState::PROPOSED
     update_attributes!(updated_by: challenger, state: ChallengeState::ACCEPTED)
