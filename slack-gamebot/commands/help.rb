@@ -21,8 +21,6 @@ report <opponent> [score, ...]: record a game
 confirm <reporter>: confirm a reported score
 contest <reporter>: contest a reported score
 cancel: cancel a previous report
-resigned [to <opponent>]: record a resignation
-draw: record a tie
 
 Stats
 -----
