@@ -72,8 +72,6 @@ class Report
       state: ReportState::PROPOSED,
       scores: scores
     )
-
-    ConfirmReport.perform_in(1.day, )
   end
 
   def confirm!(confirmer)
@@ -98,7 +96,7 @@ class Report
 
   def to_s
     "#{reporters.first.display_name} has claimed they #{score_verb} #{opponents.first.display_name} #{Score.match_score_to_string(scores)} with #{Score.reporter_first_scores_to_string(scores)}.
-I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the score will be auto-confirmed in 24 hours."
+I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`."
   end
 
   def self.find_by_users(team, channel, player1, player2, states = [ReportState::PROPOSED])
