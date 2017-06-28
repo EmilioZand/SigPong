@@ -33,6 +33,7 @@ class User
   SORT_ORDERS = ['elo', '-elo', 'created_at', '-created_at', 'wins', '-wins', 'losses', '-losses', 'ties', '-ties', 'user_name', '-user_name', 'rank', '-rank']
 
   scope :ranked, -> { where(:rank.ne => nil) }
+  scope :placed, -> { where(:rank.ne => nil, :"elo_history.5".exists => true) }
   scope :captains, -> { where(captain: true) }
 
   def current_matches

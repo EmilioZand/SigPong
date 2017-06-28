@@ -19,10 +19,10 @@ module SlackGamebot
             max = Integer(number)
           end
         end
-        ranked_players = client.owner.users.ranked
+        ranked_players = client.owner.users.placed
         if ranked_players.any?
           message = ranked_players.send(reverse ? :desc : :asc, :rank).limit(max).each_with_index.map do |user, index|
-            "#{reverse ? index + 1 : user.rank}. #{user}"
+            "#{index + 1}. #{user}"
           end.join("\n")
           client.say(channel: data.channel, text: message)
         else
