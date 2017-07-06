@@ -9,7 +9,8 @@ module Api
       property :tied, type: Boolean, desc: 'Match is a tie.'
       property :resigned, type: Boolean, desc: 'The loser resigned.'
       property :scores, type: Array, desc: 'Match scores.'
-      property :elo_change, type: Integer, desc: 'Amount of ELO winner gained'
+      property :elo_gain, type: Integer, desc: 'Amount of ELO winner gained'
+      property :elo_loss, type: Integer, desc: 'Amount of ELO loser lost'
       property :created_at, type: DateTime, desc: 'Date/time when the match was created.'
       collection :winners, extend: UserPresenter, as: :winners
       collection :losers, extend: UserPresenter, as: :losers

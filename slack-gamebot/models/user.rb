@@ -8,6 +8,8 @@ class User
   field :losses, type: Integer, default: 0
   field :losing_streak, type: Integer, default: 0
   field :winning_streak, type: Integer, default: 0
+  field :current_streak, type: Integer, default: 0
+  field :current_streak_is_win, type: Boolean, default: true
   field :ties, type: Integer, default: 0
   field :elo, type: Integer, default: 0
   field :elo_history, type: Array, default: []
@@ -177,8 +179,15 @@ class User
       longest_losing_streak = current_losing_streak if current_losing_streak > longest_losing_streak
       longest_winning_streak = current_winning_streak if current_winning_streak > longest_winning_streak
     end
-    return if losing_streak == longest_losing_streak && winning_streak == longest_winning_streak
-    update_attributes!(losing_streak: longest_losing_streak, winning_streak: longest_winning_streak)
+    if current_winning_streak > current_losing_streak
+      current_streak_value = current_winning_streak
+      current_streak_is_win_flag = true
+    else
+      current_streak_value = current_losing_streak
+      current_streak_is_win_flag = false
+    end
+    return if losing_streak == longest_losing_streak && winning_streak == longest_winning_streak && current_streak == current_streak_value && current_streak_is_win == current_streak_is_win_flag
+    update_attributes!(losing_streak: longest_losing_streak, winning_streak: longest_winning_streak, current_streak: current_streak_value, current_streak_is_win: current_streak_is_win_flag)
   end
 
   def self.rank_section(team, users)
