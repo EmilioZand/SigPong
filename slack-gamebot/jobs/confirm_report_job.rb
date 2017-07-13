@@ -5,7 +5,7 @@ class ConfirmReportJob
 
   def perform(report)
     if report.proposed?
-      report.confirm!(report.created_by)
+      report.confirm!(report.opponents.first)
     end
   end
 end
