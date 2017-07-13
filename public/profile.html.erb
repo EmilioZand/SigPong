@@ -6,23 +6,37 @@
     </head>
     <body id="page-top" class="index">
         <div class="container">
+            <br>
+            <a href="/"> <-Back </a>
             <div class="row">
                 <div class="col-sm-6" id="profile">
                     <h1 id="user-name"></h1>
-                    <div class="row">
-                        <div class="col-sm-4" id="wins"></div>
-                        <div class="col-sm-4" id="losses"></div>
-                        <div class="col-sm-4" id="elo"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6" id="win-streak">LWS: </div>
-                        <div class="col-sm-6" id="lose-streak">LLS: </div>
+                    <div class="profile-info">
+                        <div class="row">
+                            <div class="col-sm-6">Record: </div>
+                            <div class="col-sm-3" id="wins"></div>
+                            <div class="col-sm-3" id="losses"></div>
+                        </div>
+                            <div class="row">
+                            <div class="col-sm-6">Longest Streaks: </div>
+                            <div class="col-sm-3" id="win-streak"></div>
+                            <div class="col-sm-3" id="lose-streak"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">Current Streaks: </div>
+                            <div class="col-sm-3" id="current-streak"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">Elo History: </div>
+                            <div class="col-sm-3" id="max-elo">Max: </div>
+                            <div class="col-sm-3" id="min-elo">Min: </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-6" id="recent-matches">>
+                <div class="col-sm-6" id="recent-matches">
                     <h2>Recent Matches</h2>
                 </div>
         </div>
-        <%= partial 'public/partials/_scripts.html' %>
+        <%= partial 'public/partials/_profile_scripts.html' %>
     </body>
 </html>

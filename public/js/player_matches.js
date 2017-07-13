@@ -1,7 +1,11 @@
 $(document).ready(function() {
+  let url = new URL(window.location.href)
+  let searchParams = new URLSearchParams(url.search);
+  let user_name = searchParams.get('user');
+let ajaxUrl = "api/matches/user?user_name=" + user_name;
   $.ajax({
     type: "GET",
-    url: "api/matches?team_id=59408e751865720006b81b9d",
+    url: ajaxUrl,
     success: function(data) {
       var table = $('<table></table>').addClass('table recent-matches');
       var matches = data._embedded.matches

@@ -1,34 +1,30 @@
 $(document).ready(function() {
-  var user_id =  window.location.href.substring(url.lastIndexOf('/') + 1);
-  var elo_history = [];
+  let url = new URL(window.location.href)
+  let searchParams = new URLSearchParams(url.search);
+  let user_name = searchParams.get('user');
+  let ajaxUrl = "api/users/user?user_name=" + user_name;
+  console.log(user_name);
+  let elo_history = [];
   $.ajax({
     type: "GET",
-    url: `https://sigpong.herokuapp.com/api/users/#{user_id}`,
+    url: ajaxUrl,
     success: function(user) {
       elo_history = user.elo_history;
       matches = user.matches;
-      $('#user-name').append(user.user_name);
+      let streak_text = "";
+      if(user.current_streak_is_win === true){
+        streak_text = "W" + user.current_streak;
+      } else if(user.current_streak_is_win === false) {
+        streak_text = "L" + user.current_streak;
+      }
+      $('#user-name').append(user.user_name + " - " + (user.elo + 1200) + " ELO");
       $('#wins').append(user.wins + "W");
       $('#losses').append(user.losses + "L");
-      $('#elo').append(user.elo + " ELO");
+      $('#max-elo').append((Math.max(...user.elo_history) + 1200));
+      $('#min-elo').append((Math.min(...user.elo_history) + 1200));
       $('#win-streak').append(user.winning_streak + "W");
       $('#lose-streak').append(user.losing_streak + "L");
-
-      var table = $('<table></table>').addClass('table recent-matches');
-      table.append( '<thead><tr><th>' + 'Winner' + '</th><th>' + 'Loser' + '</th><th>'+ 'Score' + '</th><th>' + "ELO Change" + '</th></tr></thead>' );
-      for(var i=0;i<matches.length;i++){
-        var match = matches[i];
-        match.elo_change = elo_history.pop();
-        var games = match.scores;
-        var loserScore = 0;
-        var winnerScore = 0;
-        for(var j=0;j<games.length;j++){
-          games[j][0] > games[j][1] ? loserScore++ : winnerScore++;
-        }
-        var overallScore = winnerScore + ' : ' + loserScore
-        table.append( '<tr><td>' + match.winners[0].user_name + '</td><td>' + match.losers[0].user_name + '</td><td>'+ overallScore + '</td><td>' + (match.elo_change || '') + '</td></tr>' );
-      }
-      $('#recent-matches').append(table);
+      $('#current-streak').append(streak_text);
     },
   });
 });

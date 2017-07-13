@@ -7,6 +7,20 @@ module Api
       helpers Api::Helpers::PaginationParameters
 
       namespace :matches do
+
+        desc 'Get all the matches for a user'
+        params do
+          requires :user_name, type: String, desc: 'User name.'
+          use :pagination
+        end
+         sort Match::SORT_ORDERS
+         get 'user' do
+          user = User.where(user_name: params[:user_name]).first || error!('Not Found', 404)
+          matches = paginate_and_sort_by_cursor(user.current_matches, default_sort_order: '-_id')
+          error!('Not Found', 404) unless user.team.api?
+          present matches, with: Api::Presenters::MatchesPresenter
+        end
+        
         desc 'Get a match.'
         params do
           requires :id, type: String, desc: 'Match ID.'

@@ -33,6 +33,15 @@ module Api
           query = team.users.unplaced
           users = paginate_and_sort_by_cursor(query, default_sort_order: '-elo')
           present users, with: Api::Presenters::UsersPresenter
+
+        desc 'Get a user by user name.'
+        params do
+          requires :user_name, type: String, desc: 'User name.'
+        end
+        get 'user' do
+          user = User.where(user_name: params[:user_name]).first || error!('User not found', 500)
+          error!('User API not enabled', 404) unless user.team.api?
+          present user, with: Api::Presenters::UserPresenter
         end
 
         desc 'Get a user.'
