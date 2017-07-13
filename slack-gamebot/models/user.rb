@@ -36,6 +36,7 @@ class User
 
   scope :ranked, -> { where(:rank.ne => nil) }
   scope :placed, -> { where(:rank.ne => nil, :"elo_history.5".exists => true) }
+  scope :unplaced, -> { where(:rank.ne => nil, :"elo_history.5".exists => false) }
   scope :captains, -> { where(captain: true) }
 
   def current_matches

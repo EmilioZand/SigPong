@@ -20,6 +20,20 @@ module Api
         }
       end
 
+      link :ranked_users do |opts|
+        {
+          href: "#{base_url(opts)}/api/users/ranked/{?team_id}",
+          templated: true
+        }
+      end
+
+      link :unranked_users do |opts|
+        {
+          href: "#{base_url(opts)}/api/users/unranked/{?team_id}",
+          templated: true
+        }
+      end
+
       link :challenges do |opts|
         {
           href: "#{base_url(opts)}/api/challenges/#{link_params(Api::Helpers::PaginationParameters::ALL, :team_id)}",

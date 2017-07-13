@@ -7,6 +7,34 @@ module Api
       helpers Api::Helpers::PaginationParameters
 
       namespace :users do
+        desc 'Get all ranked users'
+        params do
+          requires :team_id, type: String
+          use :pagination
+        end
+        sort User::SORT_ORDERS
+        get 'ranked' do
+          team = Team.find(params[:team_id]) || error!('team_id not supplied', 500)
+          error!("Team #{team_id} API not enabled", 404) unless team.api?
+          query = team.users.placed
+          users = paginate_and_sort_by_cursor(query, default_sort_order: '-elo')
+          present users, with: Api::Presenters::UsersPresenter
+        end
+
+        desc 'Get all unranked users'
+        params do
+          requires :team_id, type: String
+          use :pagination
+        end
+        sort User::SORT_ORDERS
+        get 'unranked' do
+           team = Team.find(params[:team_id]) || error!('team_id not supplied', 500)
+          error!("Team #{team_id} API not enabled", 404) unless team.api?
+          query = team.users.unplaced
+          users = paginate_and_sort_by_cursor(query, default_sort_order: '-elo')
+          present users, with: Api::Presenters::UsersPresenter
+        end
+
         desc 'Get a user.'
         params do
           requires :id, type: String, desc: 'User ID.'
