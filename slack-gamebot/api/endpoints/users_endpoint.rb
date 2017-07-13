@@ -33,6 +33,7 @@ module Api
           query = team.users.unplaced
           users = paginate_and_sort_by_cursor(query, default_sort_order: '-elo')
           present users, with: Api::Presenters::UsersPresenter
+        end
 
         desc 'Get a user by user name.'
         params do

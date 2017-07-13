@@ -17,7 +17,8 @@ $(document).ready(function() {
       } else if(user.current_streak_is_win === false) {
         streak_text = "L" + user.current_streak;
       }
-      $('#user-name').append(user.user_name + " - " + (user.elo + 1200) + " ELO");
+      $('#user-name').append(user.user_name);
+      $('#current-elo').append((user.elo + 1200) + " ELO");
       $('#wins').append(user.wins + "W");
       $('#losses').append(user.losses + "L");
       $('#max-elo').append((Math.max(...user.elo_history) + 1200));
