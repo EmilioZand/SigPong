@@ -1,0 +1,11 @@
+a, a.winner {
+    color: darkcyan
+}
+
+a.loser {
+    color: coral
+}
+
+.profile-info{
+    font-size: 16px;
+}

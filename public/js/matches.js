@@ -12,13 +12,17 @@ $(document).ready(function() {
         var loserScore = 0;
         var winnerScore = 0;
         var overallScore = "";
+        let winner_user_name = match.winners[0].user_name;
+        let loser_user_name = match.losers[0].user_name
+        let winner_link =`<a class="winner" href=/profile?user=${winner_user_name}>${winner_user_name}</a>`
+        let loser_link =`<a class="loser" href=/profile?user=${loser_user_name}>${loser_user_name}</a>`
         if (games){
           for(var j=0;j<games.length;j++){
             games[j][0] > games[j][1] ? loserScore++ : winnerScore++;
           }
           overallScore = winnerScore + ' : ' + loserScore
         }
-        table.append( '<tr><td>' + match.winners[0].user_name + '</td><td>' + match.losers[0].user_name + '</td><td>'+ overallScore + '</td><td>+' + (match.elo_gain || '') + ' / -' + (match.elo_loss || '') + '</td></tr>' );
+        table.append( '<tr><td>' + winner_link + '</td><td>' + loser_link + '</td><td>'+ overallScore + '</td><td>+' + (match.elo_gain || '') + ' / -' + (match.elo_loss || '') + '</td></tr>' );
       }
       $('#recent-matches').append(table);
     },
