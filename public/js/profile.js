@@ -17,8 +17,10 @@ $(document).ready(function() {
       } else if(user.current_streak_is_win === false) {
         streak_text = "L" + user.current_streak;
       }
+      let win_rate = (user.wins / (user.wins + user.losses)).toFixed(2);
       $('#user-name').append(user.user_name);
       $('#current-elo').append((user.elo + 1200) + " ELO");
+      $('#win-rate').append(win_rate + "%");
       $('#wins').append(user.wins + "W");
       $('#losses').append(user.losses + "L");
       $('#max-elo').append((Math.max(...user.elo_history) + 1200));
