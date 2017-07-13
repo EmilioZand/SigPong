@@ -17,6 +17,20 @@ module Api
           present match, with: Api::Presenters::MatchPresenter
         end
 
+        desc 'Get all the matches for a user'
+        params do
+          requires :user_id, type: String, desc: 'User ID.'
+          use :pagination
+        end
+         sort Match::SORT_ORDERS
+         get ':user' do
+          user = User.find(params[:user_id]) || error!('Not Found', 404)
+          matches = paginate_and_sort_by_cursor(user.current_matches, default_sort_order: '-_id')
+          error!('Not Found', 404) unless user.team.api?
+          present matches, with: Api::Presenters::MatchesPresenter
+        end
+
+
         desc 'Get all the matches.'
         params do
           requires :team_id, type: String
