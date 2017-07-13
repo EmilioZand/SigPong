@@ -17,7 +17,7 @@ $(document).ready(function() {
       } else if(user.current_streak_is_win === false) {
         streak_text = "L" + user.current_streak;
       }
-      let win_rate = (user.wins / (user.wins + user.losses)).toFixed(2);
+      let win_rate = ((user.wins / (user.wins + user.losses))*100).toFixed(2);
       $('#user-name').append(user.user_name);
       $('#current-elo').append((user.elo + 1200) + " ELO");
       $('#win-rate').append(win_rate + "%");
