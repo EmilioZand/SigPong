@@ -9,3 +9,8 @@ a.loser {
 .profile-info{
     font-size: 16px;
 }
+
+img.avatar {
+    max-width: 250px;
+    max-height: 250px;
+}

@@ -18,6 +18,7 @@ class User
   field :captain, type: Boolean, default: false
   field :registered, type: Boolean, default: true
   field :nickname, type: String
+  field :avatar, type: String
 
   belongs_to :team, index: true
   validates_presence_of :team

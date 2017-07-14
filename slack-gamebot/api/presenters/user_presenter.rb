@@ -8,6 +8,7 @@ module Api
       property :id, type: String, desc: 'User ID.'
       property :user_name, type: String, desc: 'User name.'
       property :nickname, type: String, desc: 'Optional nickname.'
+      property :avatar, type: String, desc: 'Avatar URL'
       property :wins, type: Integer, desc: 'Number of wins.'
       property :losses, type: Integer, desc: 'Number of losses.'
       property :elo, type: Integer, desc: 'Elo.'

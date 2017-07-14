@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $('#avatar').hide();
   let url = new URL(window.location.href)
   let searchParams = new URLSearchParams(url.search);
   let user_name = searchParams.get('user');
@@ -19,6 +20,10 @@ $(document).ready(function() {
       }
       let win_rate = ((user.wins / (user.wins + user.losses))*100).toFixed(2);
       $('#user-name').append(user.user_name);
+      if(user.avatar.length > 0){
+        $('#avatar').attr("src",user.avatar);
+        $('#avatar').show();
+      }
       $('#current-elo').append((user.elo + 1200) + " ELO");
       $('#win-rate').append(win_rate + "%");
       $('#wins').append(user.wins + "W");
