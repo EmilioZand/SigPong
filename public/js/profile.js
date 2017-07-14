@@ -20,7 +20,7 @@ $(document).ready(function() {
       }
       let win_rate = ((user.wins / (user.wins + user.losses))*100).toFixed(2);
       $('#user-name').append(user.user_name);
-      if(user.avatar.length > 0){
+      if(user.avatar){
         $('#avatar').attr("src",user.avatar);
         $('#avatar').show();
       }
