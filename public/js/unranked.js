@@ -5,7 +5,7 @@ $(document).ready(function() {
     success: function(data) {
       var users = data._embedded.users;
       var table = $('<table></table>').addClass('table unranked-users');
-      table.append( '<thead><tr><th>' + 'Rank' + '</th><th>' + 'Name' + '</th><th>'+ 'ELO' + '</th><th>' + 'Wins' + '</th><th>' + 'Losses' + '</th><th>' + "Current Streak" + '</th><th>' + "Longest Winning" + '</th><th>' + "Longest Losing" +'</th></tr></thead>' );
+      table.append( '<thead><tr><th>' + 'Rank' + '</th><th>' + 'Name' + '</th><th>'+ 'Games Played' + '</th><th>' + 'Wins' + '</th><th>' + 'Losses' + '</th><th>' + "Current Streak" + '</th><th>' + "Longest Winning" + '</th><th>' + "Longest Losing" +'</th></tr></thead>' );
 
       for(var i=0; i<users.length; i++){
         var user = users[i];
@@ -16,7 +16,7 @@ $(document).ready(function() {
         } else if(user.current_streak_is_win === false) {
           streakText = "L" + user.current_streak;
         }
-        table.append( '<tr><td>' + (i+1) + '</td><td>' + user_link + '</td><td>'+ (user.elo + 1200) + '</td><td>' + user.wins + '</td><td>' + user.losses + '</td><td>' + streakText + '</td><td>' + "W" + user.winning_streak + '</td><td>' + "L" + user.losing_streak + '</td></tr>' );
+        table.append( '<tr><td>' + (i+1) + '</td><td>' + user_link + '</td><td>'+ (user.wins + user.losses) + '</td><td>' + user.wins + '</td><td>' + user.losses + '</td><td>' + streakText + '</td><td>' + "W" + user.winning_streak + '</td><td>' + "L" + user.losing_streak + '</td></tr>' );
       }
       $('#unranked-users').append(table);
     },
