@@ -6,6 +6,7 @@ class User
   field :user_name, type: String
   field :wins, type: Integer, default: 0
   field :losses, type: Integer, default: 0
+  field :games, type: Integer, default: ->{wins + losses}
   field :losing_streak, type: Integer, default: 0
   field :winning_streak, type: Integer, default: 0
   field :current_streak, type: Integer, default: 0
@@ -29,15 +30,17 @@ class User
   index(losses: 1, team_id: 1)
   index(ties: 1, team_id: 1)
   index(elo: 1, team_id: 1)
+  index(games: 1, team_id: 1)
 
   before_save :update_elo_history!
+  before_save :update_game_count!
   after_save :rank!
 
   SORT_ORDERS = ['elo', '-elo', 'created_at', '-created_at', 'wins', '-wins', 'losses', '-losses', 'ties', '-ties', 'user_name', '-user_name', 'rank', '-rank']
 
   scope :ranked, -> { where(:rank.ne => nil) }
-  scope :placed, -> { where(:rank.ne => nil, :"elo_history.10".exists => true) }
-  scope :unplaced, -> { where(:rank.ne => nil, :"elo_history.10".exists => false) }
+  scope :placed, -> { where(:rank.ne => nil, :games.gte => 8) }
+  scope :unplaced, -> { where(:rank.ne => nil, :games.lt => 8) }
   scope :captains, -> { where(captain: true) }
 
   def current_matches
@@ -149,6 +152,11 @@ class User
   def update_elo_history!
     return unless elo_changed?
     elo_history << elo
+  end
+
+  def update_game_count!
+    return unless wins_changed? || losses_changed?
+    games = wins + losses
   end
 
   def self.rank!(team)
