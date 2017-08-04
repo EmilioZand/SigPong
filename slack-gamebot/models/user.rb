@@ -6,7 +6,7 @@ class User
   field :user_name, type: String
   field :wins, type: Integer, default: 0
   field :losses, type: Integer, default: 0
-  field :games, type: Integer, default: ->{wins + losses}
+  field :games, type: Integer, default: ->{wins + losses + ties}
   field :losing_streak, type: Integer, default: 0
   field :winning_streak, type: Integer, default: 0
   field :current_streak, type: Integer, default: 0
@@ -155,8 +155,8 @@ class User
   end
 
   def update_game_count!
-    return unless wins_changed? || losses_changed?
-    games = wins + losses
+    return unless wins_changed? || losses_changed? || ties_changed?
+    games = wins + losses + ties
   end
 
   def self.rank!(team)
@@ -164,6 +164,8 @@ class User
     players = any_of({ :wins.gt => 0 }, { :losses.gt => 0 }, :ties.gt => 0).where(team: team, registered: true).desc(:elo).desc(:wins).asc(:losses).desc(:ties)
     players.each_with_index do |player, index|
       if player.registered?
+        games = player.wins + player.losses + player.ties
+        player.set(games: games) unless games == player.games
         rank += 1 if index > 0 && [:elo, :wins, :losses, :ties].any? { |property| players[index - 1].send(property) != player.send(property) }
         player.set(rank: rank) unless rank == player.rank
       end
