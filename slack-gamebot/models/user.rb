@@ -18,6 +18,7 @@ class User
   field :rank, type: Integer
   field :captain, type: Boolean, default: false
   field :registered, type: Boolean, default: true
+  field :retired, type: Boolean, default: false
   field :nickname, type: String
   field :avatar, type: String
 
@@ -38,10 +39,11 @@ class User
 
   SORT_ORDERS = ['elo', '-elo', 'created_at', '-created_at', 'wins', '-wins', 'losses', '-losses', 'ties', '-ties', 'user_name', '-user_name', 'rank', '-rank']
 
-  scope :ranked, -> { where(:rank.ne => nil) }
-  scope :placed, -> { where(:rank.ne => nil, :games.gte => 8) }
-  scope :unplaced, -> { where(:rank.ne => nil, :games.lt => 8) }
+  scope :ranked, -> { where(:rank.ne => nil, :retired => false) }
+  scope :placed, -> { where(:rank.ne => nil, :games.gte => 8, :retired => false) }
+  scope :unplaced, -> { where(:rank.ne => nil, :games.lt => 8, :retired => false) }
   scope :captains, -> { where(captain: true) }
+  scope :retired, -> { where(retired: true) }
 
   def current_matches
     Match.current.where(team: team).or({ winner_ids: _id }, loser_ids: _id)
@@ -161,7 +163,7 @@ class User
 
   def self.rank!(team)
     rank = 1
-    players = any_of({ :wins.gt => 0 }, { :losses.gt => 0 }, :ties.gt => 0).where(team: team, registered: true).desc(:elo).desc(:wins).asc(:losses).desc(:ties)
+    players = any_of({ :wins.gt => 0 }, { :losses.gt => 0 }, :ties.gt => 0).where(team: team, registered: true, retired: false).desc(:elo).desc(:wins).asc(:losses).desc(:ties)
     players.each_with_index do |player, index|
       if player.registered?
         games = player.wins + player.losses + player.ties

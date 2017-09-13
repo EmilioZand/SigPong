@@ -35,6 +35,20 @@ module Api
           present users, with: Api::Presenters::UsersPresenter
         end
 
+        desc 'Get all retired users'
+        params do
+          requires :team_id, type: String
+          use :pagination
+        end
+        sort User::SORT_ORDERS
+        get 'retired' do
+           team = Team.find(params[:team_id]) || error!('team_id not supplied', 500)
+          error!("Team #{team_id} API not enabled", 404) unless team.api?
+          query = team.users.retired
+          users = paginate_and_sort_by_cursor(query, default_sort_order: '-elo')
+          present users, with: Api::Presenters::UsersPresenter
+        end
+
         desc 'Get a user by user name.'
         params do
           requires :user_name, type: String, desc: 'User name.'
