@@ -77,7 +77,6 @@ class Report
       scores: scores
     )
 
-    ConfirmReportJob.perform_in(24.hours, report)
     report
   end
 
