@@ -4,7 +4,6 @@ $(document).ready(function() {
   let searchParams = new URLSearchParams(url.search);
   let user_name = searchParams.get('user');
   let ajaxUrl = "api/users/user?user_name=" + user_name;
-  console.log(user_name);
   let elo_history = [];
   $.ajax({
     type: "GET",
