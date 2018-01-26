@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.3.3'
 
 gem 'slack-ruby-client', github: 'slack-ruby/slack-ruby-client'
 gem 'slack-ruby-bot-server'
@@ -19,7 +19,7 @@ gem 'sucker_punch', '~> 2.0'
 gem 'giphy'
 gem 'hashie', '3.4.6'
 gem 'rake', '~> 10.4'
-gem 'nokogiri' '~> 1.8.1'
+gem 'nokogiri', '~> 1.8.1'
 
 group :development, :test do
   gem 'rubocop', '0.34.2'
