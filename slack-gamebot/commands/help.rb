@@ -19,6 +19,7 @@ Games
 challenge <opponent>, ... [with <teammate>, ...]: challenge opponent(s) to a game
 report <opponent> [score, ...]: record a game
 confirm <reporter>: confirm a reported score
+ugh <reporter>: confirm a reported score begrudgingly
 contest <reporter>: contest a reported score
 cancel: cancel a previous report
 
