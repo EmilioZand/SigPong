@@ -18,7 +18,8 @@ gem 'kaminari-grape'
 gem 'sucker_punch', '~> 2.0'
 gem 'giphy'
 gem 'hashie', '3.4.6'
-gem 'rake', '~> 10.4' 
+gem 'rake', '~> 10.4'
+gem 'nokogiri' '~> 1.8.1'
 
 group :development, :test do
   gem 'rubocop', '0.34.2'
