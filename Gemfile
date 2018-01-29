@@ -20,6 +20,7 @@ gem 'giphy'
 gem 'hashie', '3.4.6'
 gem 'rake', '~> 10.4'
 gem 'nokogiri', '~> 1.8.1'
+gem 'multi_json'
 
 group :development, :test do
   gem 'rubocop', '0.34.2'

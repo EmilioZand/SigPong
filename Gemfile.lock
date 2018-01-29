@@ -290,6 +290,7 @@ DEPENDENCIES
   mongoid (~> 5.1.4)
   mongoid-scroll
   mongoid-shell
+  multi_json
   newrelic_rpm
   nokogiri (~> 1.8.1)
   rack-robotz
