@@ -82,6 +82,22 @@ class Match
     Match.lose!(team: Team.first, winners: [winner], losers: [loser], scores: scores)
   end
 
+  def delete_and_reset_score
+    winners.each do |winner|
+      winner.elo -= self.elo_gain
+      winner.wins -= 1
+      winner.save!
+    end
+
+    losers.each do |loser|
+      loser.elo += self.elo_loss
+      loser.losses -= 1
+      loser.save!
+    end
+
+    self.destroy
+  end
+
   private
 
   def validate_teams

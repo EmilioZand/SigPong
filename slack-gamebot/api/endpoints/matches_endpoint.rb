@@ -43,6 +43,16 @@ module Api
           matches = paginate_and_sort_by_cursor(team.matches, default_sort_order: '-_id')
           present matches, with: Api::Presenters::MatchesPresenter
         end
+
+        desc 'Delete a status.'
+        params do
+          requires :id, type: String, desc: 'Match ID.'
+        end
+        delete ':id' do
+          match = Match.find(params[:id]) || error!('Not Found', 404)
+          error!('Not Found', 404) unless match.team.api?
+          match.delete_and_reset_score
+        end
       end
     end
   end
