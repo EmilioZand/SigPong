@@ -6,7 +6,7 @@ module SlackGamebot
         report = ::Report.find_by_opponent(client.owner, data.channel, player)
         if report
           report.confirm!(player)
-          client.say(channel: data.channel, text: "#{report.opponents.map(&:user_name).and} confirmed #{report.reporters.map(&:user_name).and}'s reported score.", gif: 'correct')
+          client.say(channel: data.channel, text: "#{report.opponents.map(&:display_name).and} confirmed #{report.reporters.map(&:display_name).and}'s reported score.", gif: 'correct')
           logger.info "ACCEPT: #{client.owner} - #{report}"
         else
           client.say(channel: data.channel, text: 'No reports to accept!')

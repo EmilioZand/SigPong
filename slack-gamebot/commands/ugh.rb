@@ -7,7 +7,7 @@ module SlackGamebot
         if report
           report.confirm!(player)
           outcome_verb = report.reporter_won? ? "beat" : "lost to"
-          client.say(channel: data.channel, text: "Joke's on you, #{report.opponents.map(&:user_name).and}! #{report.reporters.map(&:user_name).and} #{outcome_verb} you and you're just going to have to deal with it.", gif: 'correct')
+          client.say(channel: data.channel, text: "Joke's on you, #{report.opponents.map(&:display_name).and}! #{report.reporters.map(&:display_name).and} #{outcome_verb} you and you're just going to have to deal with it.", gif: 'deal with it')
           logger.info "BEGRUDGINGLY ACCEPT: #{client.owner} - #{report}"
         else
           client.say(channel: data.channel, text: 'No reports to complain about!')
