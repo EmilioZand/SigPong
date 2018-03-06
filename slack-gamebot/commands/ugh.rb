@@ -10,7 +10,7 @@ module SlackGamebot
           client.say(channel: data.channel, text: "Joke's on you, #{report.opponents.map(&:display_name).and}! #{report.reporters.map(&:display_name).and} #{outcome_verb} you and you're just going to have to deal with it.", gif: 'deal with it')
           logger.info "BEGRUDGINGLY ACCEPT: #{client.owner} - #{report}"
         else
-          client.say(channel: data.channel, text: 'No reports to complain about!')
+          client.say(channel: data.channel, text: "No reports to complain about! If you're just having a bad time, this may help:", gif: "#{['puppy', 'kitten', 'baby goat'].sample} fail")
           logger.info "BEGRUDGINGLY ACCEPT: #{client.owner} - #{data.user}, N/A"
         end
       end
