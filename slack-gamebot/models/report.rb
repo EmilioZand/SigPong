@@ -105,6 +105,12 @@ class Report
 I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the report will auto-confirm in 24h."
   end
 
+  def self.confirm_outstanding_reports
+    Report.proposed.each do |report|
+      report.confirm!(report.opponents.first)
+    end
+  end
+
   def self.find_by_users(team, channel, player1, player2, states = [ReportState::PROPOSED])
     Report.any_of(
       { reporter_ids: player1._id,  opponent_ids: player2._id},
