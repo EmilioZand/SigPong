@@ -1,45 +1,44 @@
 module SlackGamebot
   class App < SlackRubyBotServer::App
-    DEAD_MESSAGE = <<-EOS
+    include Celluloid
+
+    DEAD_MESSAGE = <<-EOS.freeze
 This leaderboard has been dead for over a month, deactivating.
 Re-install the bot at https://www.playplay.io. Your data will be purged in 2 weeks.
 EOS
 
-    def prepare!
-      super
-      update_unbalanced_teams!
-      deactivate_dead_teams!
-      nudge_sleeping_teams!
+    def after_start!
+      once_and_every 60 * 3 do
+        ping_teams!
+      end
     end
 
     private
 
-    def deactivate_dead_teams!
-      Team.active.each do |team|
-        next if team.premium?
-        next unless team.dead?
-        begin
-          team.deactivate!
-          team.inform! DEAD_MESSAGE, 'dead'
-        rescue StandardError => e
-          logger.warn "Error informing team #{team}, #{e.message}."
-        end
+    def once_and_every(tt)
+      yield
+      every tt do
+        yield
       end
     end
 
-    def nudge_sleeping_teams!
+    def ping_teams!
       Team.active.each do |team|
-        next unless team.nudge?
         begin
-          team.nudge!
+          ping = team.ping!
+          next if ping[:presence].online
+          logger.warn "DOWN: #{team}"
+          after 60 do
+            ping = team.ping!
+            unless ping[:presence].online
+              logger.info "RESTART: #{team}"
+              SlackGamebot::Service.instance.start!(team)
+            end
+          end
         rescue StandardError => e
-          logger.warn "Error nudging team #{team}, #{e.message}."
+          logger.warn "Error pinging team #{team}, #{e.message}."
         end
       end
-    end
-
-    def update_unbalanced_teams!
-      Team.where(unbalanced: nil).update_all(unbalanced: false)
     end
   end
 end
