@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/slack-ruby/slack-ruby-client.git
-  revision: e7d6daba7ee52a9032882a04201dd33b95c9aee5
+  revision: 018dcfdea5a4bfb63310ac16e0dfceb1827816f4
   specs:
     slack-ruby-client (0.11.2)
       activesupport
@@ -32,13 +32,13 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     bson (4.3.0)
     builder (3.2.3)
-    capybara (2.17.0)
+    capybara (3.3.0)
       addressable
       mini_mime (>= 0.1.3)
-      nokogiri (>= 1.3.3)
-      rack (>= 1.0.0)
-      rack-test (>= 0.5.4)
-      xpath (>= 2.0, < 4.0)
+      nokogiri (~> 1.8)
+      rack (>= 1.6.0)
+      rack-test (>= 0.6.3)
+      xpath (~> 3.1)
     celluloid (0.17.3)
       celluloid-essentials
       celluloid-extras
@@ -60,7 +60,7 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.6)
       timers (>= 4.1.1)
-    childprocess (0.8.0)
+    childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -68,18 +68,18 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dante (0.2.0)
-    database_cleaner (1.6.2)
+    database_cleaner (1.7.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.3)
     equalizer (0.0.11)
-    excon (0.60.0)
+    excon (0.62.0)
     fabrication (2.20.1)
     faker (1.8.7)
       i18n (>= 0.7)
-    faraday (0.14.0)
+    faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
-    faraday-digestauth (0.2.1)
+    faraday-digestauth (0.3.0)
       faraday (~> 0.7)
       net-http-digest_auth (~> 1.4)
     faraday_hal_middleware (0.1.0)
@@ -90,8 +90,8 @@ GEM
       faraday (~> 0.9)
       faraday_middleware (>= 0.9.1, < 1.0)
       oj (>= 2.0, < 4.0)
-    ffi (1.9.18)
-    foreman (0.84.0)
+    ffi (1.9.25)
+    foreman (0.85.0)
       thor (~> 0.19.1)
     giphy (3.0.0)
       faraday (~> 0.9)
@@ -99,7 +99,7 @@ GEM
       faraday_middleware-parse_oj (~> 0.3)
       launchy (~> 2.4)
     gli (2.17.1)
-    grape (1.0.2)
+    grape (1.0.3)
       activesupport
       builder
       mustermann-grape (~> 1.0.0)
@@ -109,11 +109,11 @@ GEM
     grape-roar (0.3.0)
       grape
       roar (>= 1.0)
-    grape-swagger (0.27.3)
+    grape-swagger (0.29.0)
       grape (>= 0.16.2)
     hashdiff (0.3.7)
     hashie (3.4.6)
-    hitimes (1.2.6)
+    hitimes (1.3.0)
     hyperclient (0.9.0)
       faraday (>= 0.9.0)
       faraday-digestauth
@@ -121,7 +121,7 @@ GEM
       faraday_middleware
       net-http-digest_auth
       uri_template
-    i18n (0.9.3)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     kaminari-core (1.1.1)
@@ -131,13 +131,13 @@ GEM
     kaminari-mongoid (1.0.1)
       kaminari-core (~> 1.0)
       mongoid
-    kgio (2.11.1)
+    kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
-    minitest (5.11.2)
-    mongo (2.5.0)
+    minitest (5.11.3)
+    mongo (2.6.0)
       bson (>= 4.3.0, < 5.0.0)
     mongoid (5.1.6)
       activemodel (~> 4.0)
@@ -147,7 +147,7 @@ GEM
     mongoid-compatibility (0.5.1)
       activesupport
       mongoid (>= 2.0)
-    mongoid-scroll (0.3.5)
+    mongoid-scroll (0.3.6)
       i18n
       mongoid (>= 3.0)
       mongoid-compatibility
@@ -157,21 +157,21 @@ GEM
       mongoid-compatibility
     multi_json (1.13.1)
     multipart-post (2.0.0)
-    mustermann (1.0.1)
+    mustermann (1.0.2)
     mustermann-grape (1.0.0)
       mustermann (~> 1.0.0)
     net-http-digest_auth (1.4.1)
-    newrelic_rpm (4.7.1.340)
-    nio4r (2.2.0)
-    nokogiri (1.8.1)
+    newrelic_rpm (5.2.0.345)
+    nio4r (2.3.1)
+    nokogiri (1.8.3)
       mini_portile2 (~> 2.3.0)
-    oj (3.4.0)
+    oj (3.6.3)
     origin (2.3.1)
-    parser (2.4.0.2)
-      ast (~> 2.3)
-    powerpack (0.1.1)
-    public_suffix (3.0.1)
-    rack (2.0.3)
+    parser (2.5.1.0)
+      ast (~> 2.4.0)
+    powerpack (0.1.2)
+    public_suffix (3.0.2)
+    rack (2.0.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-cors (1.0.2)
@@ -180,7 +180,7 @@ GEM
       rack
     rack-server-pages (0.1.0)
       rack
-    rack-test (0.8.2)
+    rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rainbow (2.2.2)
       rake
@@ -202,22 +202,22 @@ GEM
     rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
-    rspec-support (3.7.0)
+    rspec-support (3.7.1)
     rubocop (0.34.2)
       astrolabe (~> 1.3)
       parser (>= 2.2.2.5, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
-    ruby-enum (0.7.1)
+    ruby-enum (0.7.2)
       i18n
     ruby-progressbar (1.9.0)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
-    selenium-webdriver (3.8.0)
+    selenium-webdriver (3.13.0)
       childprocess (~> 0.5)
-      rubyzip (~> 1.0)
-    slack-ruby-bot (0.10.5)
+      rubyzip (~> 1.2)
+    slack-ruby-bot (0.11.1)
       hashie
       slack-ruby-client (>= 0.6.0)
     slack-ruby-bot-server (0.5.0)
@@ -236,9 +236,9 @@ GEM
       roar (~> 1.0.4)
       slack-ruby-bot
       unicorn
-    stripe (3.9.1)
+    stripe (3.15.0)
       faraday (~> 0.10)
-    stripe-ruby-mock (2.5.1)
+    stripe-ruby-mock (2.5.4)
       dante (>= 0.2.0)
       multi_json (~> 1.0)
       stripe (>= 2.0.3)
@@ -249,7 +249,7 @@ GEM
     time_ago_in_words (0.1.1)
     timers (4.1.2)
       hitimes
-    tzinfo (1.2.4)
+    tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uber (0.0.15)
     unicorn (5.4.0)
@@ -262,15 +262,15 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    wannabe_bool (0.7.0)
-    webmock (3.3.0)
+    wannabe_bool (0.7.1)
+    webmock (3.4.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
-    xpath (3.0.0)
+    xpath (3.1.0)
       nokogiri (~> 1.8)
 
 PLATFORMS
