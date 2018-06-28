@@ -76,10 +76,13 @@ class Challenge
     teammates, opponents = split_teammates_and_opponents(team, challenger, names, separator)
     if(opponents.empty?)
       random_opponent =  User.find_challenger(challenger)
-      challenge_string = "#{teammates.map(&:user_name).and} should challenge #{random_opponent.user_name} to a match!"
-    else
-      challenge_string = "#{teammates.map(&:user_name).and} challenged #{opponents.map(&:user_name).and} to a match!"
+      opponents = [random_opponent]
     end
+
+    challenge_string = <<-EOS
+#{teammates.map(&:user_name).and} challenged #{opponents.map(&:user_name).and} to a match!
+#{teammates.map(&:user_name).and} #{teammates.size > 1 ? 'have' : 'has'} a #{Elo.team_win_percentage(teammates, opponents)}% chance of winning. Good Luck!
+    EOS
     challenge_string
   end
 
