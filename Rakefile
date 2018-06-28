@@ -6,6 +6,10 @@ Bundler.setup :default, :development
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'tasks/logger'
 
+task :environment do
+  require 'slack-gamebot'
+end
+
 unless ENV['RACK_ENV'] == 'production'
   require 'rspec/core'
   require 'rspec/core/rake_task'
@@ -21,3 +25,5 @@ unless ENV['RACK_ENV'] == 'production'
 
   import 'tasks/db.rake'
 end
+
+import 'tasks/scheduler.rake'
