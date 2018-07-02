@@ -106,9 +106,12 @@ I need #{opponents.first.display_name} to confirm by typing `pp confirm #{create
   end
 
   def self.confirm_outstanding_reports
+    num_reports = Report.proposed.count
     Report.proposed.each do |report|
+      logger.info "Confirming report #{report._id}"
       report.confirm!(report.opponents.first)
     end
+    logger.info "Confirmed #{num_reports} reports."
   end
 
   def self.find_by_users(team, channel, player1, player2, states = [ReportState::PROPOSED])
