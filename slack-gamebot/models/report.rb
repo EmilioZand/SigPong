@@ -110,6 +110,7 @@ I need #{opponents.first.display_name} to confirm by typing `pp confirm #{create
     Report.proposed.each do |report|
       logger.info "Confirming report #{report._id}"
       report.confirm!(report.opponents.first)
+      report.team.inform! "#{report.opponents.map(&:display_name).and} and #{report.reporters.map(&:display_name).and}'s reported score was auto-confirmed by the lovely AI brain of SigPong", "robot"
     end
     logger.info "Confirmed #{num_reports} reports."
   end
