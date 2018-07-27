@@ -14,6 +14,10 @@ SlackRubyBotServer.configure do |config|
   config.server_class = SlackGamebot::Server
 end
 
+Giphy.configure do |config|
+  config.rating = 'pg-13'
+end
+
 SlackGamebot::App.instance.prepare!
 
 Thread.abort_on_exception = true
