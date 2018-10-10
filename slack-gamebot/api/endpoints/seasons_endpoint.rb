@@ -27,7 +27,7 @@ module Api
           present season, with: Api::Presenters::SeasonPresenter
         end
 
-        desc 'Get all seasons.'
+        desc 'Get all past seasons.'
         params do
           requires :team_id, type: String
           use :pagination
@@ -36,7 +36,7 @@ module Api
         get do
           team = Team.find(params[:team_id]) || error!('Not Found', 404)
           error!('Not Found', 404) unless team.api?
-          seasons = paginate_and_sort_by_cursor((team.seasons << Season.new(team: team)), default_sort_order: '-_id')
+          seasons = paginate_and_sort_by_cursor(team.seasons, default_sort_order: '-_id')
           present seasons, with: Api::Presenters::SeasonsPresenter
         end
       end
