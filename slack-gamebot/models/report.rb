@@ -20,6 +20,8 @@ class Report
 
   field :scores, type: Array
   field :reporter_won, type: Boolean
+  field :reporter_team, type: String
+  field :opponent_team, type: String
   has_one :match
 
   validate :validate_playing_against_themselves
@@ -59,7 +61,7 @@ class Report
     return Score.lost?(scores)
   end
 
-  def self.create_from_teammates_and_opponents!(team, channel, reporter, opponent, scores)
+  def self.create_from_teammates_and_opponents!(team, channel, reporter, opponent, scores, reporter_team = nil, opponent_team = nil)
     if Report.opponent_won?(scores)
         won = false
     else
@@ -72,6 +74,8 @@ class Report
       created_by: reporter,
       reporters: [reporter],
       opponents: [opponent],
+      reporter_team: reporter_team,
+      opponent_team: opponent_team,
       reporter_won: won,
       state: ReportState::PROPOSED,
       scores: scores
@@ -83,9 +87,9 @@ class Report
   def confirm!(confirmer)
     fail SlackGamebot::Error, "Repprt has already been #{state}." unless state == ReportState::PROPOSED
     if(reporter_lost?)
-      match = ::Match.lose!(team: team, winners: opponents, losers: reporters, scores: scores)
+      match = ::Match.lose!(team: team, winners: opponents, losers: reporters, scores: scores, winner_team: opponent_team, loser_team: reporter_team)
     else
-      match = ::Match.lose!(team: team, winners: reporters, losers: opponents, scores: Score.reverse_scores(scores))
+      match = ::Match.lose!(team: team, winners: reporters, losers: opponents, scores: Score.reverse_scores(scores), winner_team: reporter_team, loser_team: opponent_team)
     end
     update_attributes!(updated_by: confirmer, state: ReportState::CONFIRMED)
   end
@@ -101,8 +105,11 @@ class Report
   end 
 
   def to_s
-    "#{reporters.first.display_name} has claimed they #{score_verb} #{opponents.first.display_name} #{Score.match_score_to_string(scores)} with #{Score.reporter_first_scores_to_string(scores)}.
-I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the report will auto-confirm in 24h."
+    if(reporter_team && opponent_team)
+      "#{reporters.first.display_name} has claimed they #{score_verb} #{opponents.first.display_name} #{Score.reporter_first_scores_to_string(scores)} with with #{reporter_team} vs. #{opponent_team}. I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the report will auto-confirm in 24h."
+    else
+      "#{reporters.first.display_name} has claimed they #{score_verb} #{opponents.first.display_name} #{Score.match_score_to_string(scores)} with #{Score.reporter_first_scores_to_string(scores)}. I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the report will auto-confirm in 24h."
+    end
   end
 
   def self.confirm_outstanding_reports

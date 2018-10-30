@@ -18,6 +18,8 @@ Games
 -----
 challenge <opponent>, ... [with <teammate>, ...]: challenge opponent(s) to a game
 report <opponent> [score, ...]: record a game
+lost to <opponent> [<opponent>] [with <teammate>] <score> [using <your team> vs. <their team>]: report a loss
+beat <opponent> [<opponent>] [with <teammate>] <score> [using <your team> vs. <their team>]: report a win
 confirm <reporter>: confirm a reported score
 ugh <reporter>: confirm a reported score begrudgingly
 contest <reporter>: contest a reported score

@@ -10,6 +10,8 @@ class Match
   field :scores, type: Array
   field :elo_gain, type: Integer
   field :elo_loss, type: Integer
+  field :winner_team, type: String
+  field :loser_team, type: String
   belongs_to :challenge, index: true
   belongs_to :season, inverse_of: :matches, index: true
   before_create :calculate_elo!
