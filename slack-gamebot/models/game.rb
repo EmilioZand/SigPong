@@ -12,7 +12,7 @@ class Game
   field :client_secret, type: String
   field :aliases, type: Array, default: []
 
-  validates_uniqueness_of :client_id, message: 'already exists'
+  validates_uniqueness_of :client_id, allow_nil: true, message: 'already exists'
 
   has_many :teams
 
