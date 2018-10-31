@@ -35,7 +35,7 @@ module SlackGamebot
             elsif current == :scores
               scores ||= []
               scores << Score.check(argument)
-            elsif current == :reporter_tean
+            elsif current == :reporter_team
               reporter_team ||= []
               reporter_team << argument
             elsif current == :opponent_team
@@ -50,8 +50,8 @@ module SlackGamebot
           opponent_team = opponent_team.join(' ')
         end
 
-        if opponents.nil? || scores.nil? || scores.empty?
-          client.say(channel: data.channel, text: "Please enter the scores in the form `pp lost to @opponent1 @opponent2 with @teammate 41:55 using Your Team vs. Their Team`", gif: 'error')
+        if opponents.nil? || scores.nil? || scores.empty? || (reporter_team.nil? && !opponent_team.nil?) || (!reporter_team.nil? && opponent_team.nil?)
+          client.say(channel: data.channel, text: "Please enter the scores in the form `pp beat @opponent1 @opponent2 with @teammate 41:55 using Your Team vs. Their Team`", gif: 'error')
           return
         end
 
