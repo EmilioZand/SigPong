@@ -71,7 +71,7 @@ class Report
     report = Report.create!(
       team: team,
       channel: channel,
-      created_by: reporter,
+      created_by: teammates.first,
       reporters: teammates,
       opponents: opponents,
       reporter_team: reporter_team,
