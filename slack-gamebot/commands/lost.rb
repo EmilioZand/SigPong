@@ -8,7 +8,7 @@ module SlackGamebot
 
         scores = nil
         opponents = []
-        teammates = [challenger]
+        teammates = [reporter]
         reporter_team = nil
         opponent_team = nil
         multi_player = expression && expression.include?(' with ')
