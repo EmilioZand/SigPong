@@ -54,7 +54,7 @@ module SlackGamebot
             return
           end
   
-          report = ::Report.create_from_teammates_and_opponents!(client.owner, data.channel, reporter, opponent, scores, reporter_team, opponent_team)
+          report = ::Report.create_from_teammates_and_opponents!(client.owner, data.channel, teammates, opponents, scores, reporter_team, opponent_team)
           client.say(channel: data.channel, text: report.to_s, gif: 'tie')
           logger.info "REPORT: #{client.owner} - #{report}"
         end

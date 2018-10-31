@@ -50,12 +50,12 @@ module SlackGamebot
           opponent_team = opponent_team.join(' ')
         end
 
-        if opponent.nil? || scores.nil? || scores.empty?
+        if opponents.nil? || scores.nil? || scores.empty?
           client.say(channel: data.channel, text: "Please enter the scores in the form `pp lost to @opponent1 @opponent2 with @teammate 41:55 using Your Team vs. Their Team`", gif: 'error')
           return
         end
 
-        report = ::Report.create_from_teammates_and_opponents!(client.owner, data.channel, reporter, opponent, scores, reporter_team, opponent_team)
+        report = ::Report.create_from_teammates_and_opponents!(client.owner, data.channel, teammates, opponents, scores, reporter_team, opponent_team)
         client.say(channel: data.channel, text: report.to_s, gif: 'lose')
         logger.info "REPORT: #{client.owner} - #{report}"
       end

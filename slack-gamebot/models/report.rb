@@ -61,7 +61,7 @@ class Report
     return Score.lost?(scores)
   end
 
-  def self.create_from_teammates_and_opponents!(team, channel, reporter, opponent, scores, reporter_team = nil, opponent_team = nil)
+  def self.create_from_teammates_and_opponents!(team, channel, teammates, opponents, scores, reporter_team = nil, opponent_team = nil)
     if Report.opponent_won?(scores)
         won = false
     else
@@ -72,8 +72,8 @@ class Report
       team: team,
       channel: channel,
       created_by: reporter,
-      reporters: [reporter],
-      opponents: [opponent],
+      reporters: teammates,
+      opponents: opponents,
       reporter_team: reporter_team,
       opponent_team: opponent_team,
       reporter_won: won,

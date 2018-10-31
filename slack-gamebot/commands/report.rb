@@ -26,7 +26,7 @@ module SlackGamebot
           return
         end
 
-        report = ::Report.create_from_teammates_and_opponents!(client.owner, data.channel, reporter, opponent, scores)
+        report = ::Report.create_from_teammates_and_opponents!(client.owner, data.channel, [reporter], [opponent], scores)
 
         if report.reporter_won?
           client.say(channel: data.channel, text: report.to_s, gif: 'win')
