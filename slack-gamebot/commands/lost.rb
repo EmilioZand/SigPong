@@ -36,11 +36,18 @@ module SlackGamebot
               scores ||= []
               scores << Score.check(argument)
             elsif current == :reporter_tean
+              reporter_team ||= []
               reporter_team << argument
             elsif current == :opponent_team
+              opponent_team ||= []
               opponent_team << argument
             end
           end
+        end
+
+        if(reporter_team && opponent_team)
+          reporter_team = reporter_team.join(' ')
+          opponent_team = opponent_team.join(' ')
         end
 
         if opponent.nil? || scores.nil? || scores.empty?
