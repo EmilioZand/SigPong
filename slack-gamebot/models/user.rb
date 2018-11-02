@@ -244,7 +244,7 @@ class User
   end
 
   def determine_favorite_team!
-    team = UserTeam.where(user: e).order_by(played: :desc).limit(1).first
+    team = UserTeam.where(user: self).order_by(played: :desc).limit(1).first
     favorite_team = team.team_name unless team.nil?
   end
 
