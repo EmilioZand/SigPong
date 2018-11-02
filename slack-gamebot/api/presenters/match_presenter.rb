@@ -12,6 +12,8 @@ module Api
       property :elo_gain, type: Integer, desc: 'Amount of ELO winner gained'
       property :elo_loss, type: Integer, desc: 'Amount of ELO loser lost'
       property :created_at, type: DateTime, desc: 'Date/time when the match was created.'
+      property :winner_team, type: String, desc: 'Team winners used.'
+      property :loser_team, type: String, desc: 'Team winners used.'
       collection :winners, extend: UserPresenter, as: :winners
       collection :losers, extend: UserPresenter, as: :losers
 

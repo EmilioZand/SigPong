@@ -21,6 +21,7 @@ class User
   field :retired, type: Boolean, default: false
   field :nickname, type: String
   field :avatar, type: String
+  field :favorite_team, type: String
 
   belongs_to :team, index: true
   validates_presence_of :team
@@ -35,6 +36,7 @@ class User
 
   before_save :update_elo_history!
   before_save :update_game_count!
+  before_save :determine_favorite_team!
   after_save :rank!
 
   SORT_ORDERS = ['elo', '-elo', 'created_at', '-created_at', 'wins', '-wins', 'losses', '-losses', 'ties', '-ties', 'user_name', '-user_name', 'rank', '-rank']
@@ -202,6 +204,48 @@ class User
     end
     return if losing_streak == longest_losing_streak && winning_streak == longest_winning_streak && current_streak == current_streak_value && current_streak_is_win == current_streak_is_win_flag
     update_attributes!(losing_streak: longest_losing_streak, winning_streak: longest_winning_streak, current_streak: current_streak_value, current_streak_is_win: current_streak_is_win_flag)
+  end
+
+  def calculate_streak_with_win! 
+    if current_streak_is_win && (winning_streak <= current_streak)
+      update_attributes!(current_streak: (current_streak+1), winning_streak: (current_streak+1))
+    elsif current_streak_is_win
+      update_attributes!(current_streak: (current_streak+1))
+    else
+      update_attributes!(current_streak: 1, current_streak_is_win: true)
+    end
+  end
+
+  def calculate_streak_with_loss!
+    if !current_streak_is_win && (losing_streak <= current_streak)
+      update_attributes!(current_streak: (current_streak+1), losing_streak: (current_streak+1))
+    elsif !current_streak_is_win
+      update_attributes!(current_streak: (current_streak+1))
+    else
+      update_attributes!(current_streak: 1, current_streak_is_win: false)
+    end
+  end
+
+  def update_teams_played!(team_played, won)
+    team = UserTeam.where(user: self, team_name: team_played).first
+    if(team.nil?)
+      if(won)
+        UserTeam.create!(user: self, team_name: team_played, wins: 1, played: 1)
+      else
+        UserTeam.create!(user: self, team_name: team_played, losses: 1, played: 1)
+      end
+    else
+      if(won)
+        team.update_attributes!(wins: (team.wins+1), played: (team.played+1))
+      else
+        team.update_attributes!(losses: (team.losses+1), played: (team.played+1))
+      end
+    end
+  end
+
+  def determine_favorite_team!
+    team = UserTeam.where(user: e).order_by(played: :desc).limit(1).first
+    favorite_team = team.team_name unless team.nil?
   end
 
   def self.rank_section(team, users)

@@ -64,24 +64,18 @@ class Match
       winners.inc(wins: 1)
       losers.inc(losses: 1)
     end
-    winners.each(&:calculate_streaks!)
-    losers.each(&:calculate_streaks!)
-    User.rank!(team)
-  end
 
-  def self.convert_pinpon_score!(winner_name, loser_name, score)
-    winner = User.where(user_name: winner_name)
-    loser = User.where(user_name: loser_name)
-    if score == '2:1'
-      scores = [[19,21],[21,19],[19,21]]
-    elsif score == '2:0'
-      scores = [[19,21],[19,21]]
-    elsif score == '1:0'
-      scores = [[19,21]]
-    else
-      scores = [[19,21],[21,19],[19,21]]
+    winners.each do |w|
+      w.calculate_streak_with_win!
+      w.update_teams_played!(winner_team, true)
     end
-    Match.lose!(team: Team.first, winners: [winner], losers: [loser], scores: scores)
+
+    losers.each do |l|
+      l.calculate_streaks_with_loss!
+      l.update_teams_played!(loser_team, false)
+    end
+
+    User.rank!(team)
   end
 
   def delete_and_reset_score

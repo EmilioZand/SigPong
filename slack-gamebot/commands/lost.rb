@@ -51,7 +51,7 @@ module SlackGamebot
         end
 
         if opponents.nil? || scores.nil? || scores.empty? || (reporter_team.nil? && !opponent_team.nil?) || (!reporter_team.nil? && opponent_team.nil?)
-          client.say(channel: data.channel, text: "Please enter the scores in the form `pp beat @opponent1 @opponent2 with @teammate 41:55 using Your Team vs. Their Team`", gif: 'error')
+          client.say(channel: data.channel, text: "Please enter the scores in the form `pp lost @opponent1 @opponent2 with @teammate 41:55 using Your Team vs. Their Team`", gif: 'error')
           return
         end
 

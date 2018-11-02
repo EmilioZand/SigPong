@@ -106,7 +106,7 @@ class Report
 
   def to_s
     if(reporter_team && opponent_team)
-      "#{reporters.map(&:display_name).and} has claimed they #{score_verb} #{opponents.map(&:display_name).and} #{Score.reporter_first_scores_to_string(scores)} with with #{reporter_team} vs. #{opponent_team}. I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the report will auto-confirm in 24h."
+      "#{reporters.map(&:display_name).and} has claimed they #{score_verb} #{opponents.map(&:display_name).and} with #{Score.reporter_first_scores_to_string(scores)} using #{reporter_team} vs. #{opponent_team}. I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the report will auto-confirm in 24h."
     else
       "#{reporters.map(&:display_name).and} has claimed they #{score_verb} #{opponents.map(&:display_name).and} #{Score.match_score_to_string(scores)} with #{Score.reporter_first_scores_to_string(scores)}. I need #{opponents.first.display_name} to confirm by typing `pp confirm #{created_by.user_name}` or contest with `pp contest #{created_by.user_name}`. Otherwise the report will auto-confirm in 24h."
     end
