@@ -3,7 +3,7 @@ $(document).ready(function() {
   let url = new URL(window.location.href)
   let searchParams = new URLSearchParams(url.search);
   let user_name = searchParams.get('user');
-  let ajaxUrl = "api/users/user?user_name=" + user_name;
+  let ajaxUrl = "api/users/user?team_id=59408e751865720006b81b9d&user_name=" + user_name;
   let elo_history = [];
   $.ajax({
     type: "GET",
