@@ -59,6 +59,10 @@ class User
     registered ? nickname || user_name : '<unregistered>'
   end
 
+  def inspect
+    "lemme check my notes here, uh... oh, #{display_name}"
+  end
+
   def self.slack_mention?(user_name)
     Regexp.last_match[1] if user_name =~ /^<@(.*)>$/
   end
@@ -206,7 +210,7 @@ class User
     update_attributes!(losing_streak: longest_losing_streak, winning_streak: longest_winning_streak, current_streak: current_streak_value, current_streak_is_win: current_streak_is_win_flag)
   end
 
-  def calculate_streak_with_win! 
+  def calculate_streak_with_win!
     if current_streak_is_win && (winning_streak <= current_streak)
       update_attributes!(current_streak: (current_streak+1), winning_streak: (current_streak+1))
     elsif current_streak_is_win
