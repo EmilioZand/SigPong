@@ -71,7 +71,7 @@ class Match
     end
 
     losers.each do |l|
-      l.calculate_streaks_with_loss!
+      l.calculate_streak_with_loss!
       l.update_teams_played!(loser_team, false)
     end
 
