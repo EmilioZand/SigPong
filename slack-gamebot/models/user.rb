@@ -36,7 +36,6 @@ class User
 
   before_save :update_elo_history!
   before_save :update_game_count!
-  before_save :determine_favorite_team!
   after_save :rank!
 
   SORT_ORDERS = ['elo', '-elo', 'created_at', '-created_at', 'wins', '-wins', 'losses', '-losses', 'ties', '-ties', 'user_name', '-user_name', 'rank', '-rank']
@@ -245,11 +244,12 @@ class User
         team.update_attributes!(losses: (team.losses+1), played: (team.played+1))
       end
     end
+    determine_favorite_team!
   end
 
   def determine_favorite_team!
     team = UserTeam.where(user: self).order_by(played: :desc).limit(1).first
-    favorite_team = team.team_name unless team.nil?
+    update_attributes!(favorite_team: team.team_name) unless team.nil?
   end
 
   def self.rank_section(team, users)
