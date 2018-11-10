@@ -33,6 +33,7 @@ module Api
         desc 'Create a report'
         params do
           requires :team_id, type: String
+          requires :channel, type: String
           requires :reporter_ids, type: Array
           requires :opponent_ids, type: Array
           requires :scores, type: Array
@@ -55,7 +56,8 @@ module Api
           end
 
           error!('Not Found', 404) unless team.api?
-          report = Report.create_from_teammates_and_opponents!(team, 'webUI', teammates, opponents, params[:scores], params[:reporter_team], params[:opponent_team])
+          report = Report.create_from_teammates_and_opponents!(team, params[:channel], teammates, opponents, params[:scores], params[:reporter_team], params[:opponent_team])
+          report.team.inform! report.to_s, "whatever"
           present report, with: Api::Presenters::ReportPresenter
         end
       end
