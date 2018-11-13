@@ -21,7 +21,9 @@ module Api
       property :registered, type: Boolean, desc: 'User registered or unregistered.'
       property :created_at, as: :registered_at, type: DateTime, desc: 'Date/time when the user has registered.'
       property :captain, type: Boolean, desc: 'Team captain.'
-      property :favorite_team, type: String, desc: 'Team most played.'
+      property :most_played_team, type: String, desc: 'Team most played.'
+      property :favorite_team, type: String, desc: 'Favorite Team.'
+
 
       link :team do |opts|
         request = Grape::Request.new(opts[:env])

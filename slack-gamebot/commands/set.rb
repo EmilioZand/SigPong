@@ -48,6 +48,28 @@ module SlackGamebot
           end
         end
 
+        def set_favorite_team(client,data, user, v)
+          target_user = user
+          slack_mention = v.split.first if v
+          if v && User.slack_mention?(slack_mention)
+            fail SlackGamebot::Error, "You're not a captain, sorry." unless user.captain?
+            target_user = ::User.find_by_slack_mention!(client.owner, slack_mention)
+            v = v[slack_mention.length + 1..-1]
+          end
+          unless v.nil?
+            premium client, data do
+              target_user.update_attributes!(favorite_team: v)
+            end
+          end
+          if target_user.favorite_team.blank?
+            client.say(channel: data.channel, text: "You don't have an favorite team set, #{target_user.user_name}.", gif: 'anonymous')
+            logger.info "SET: #{client.owner} - #{user.user_name}: favorite team #{target_user == user ? '' : ' for ' + target_user.user_name}is not set"
+          else
+            client.say(channel: data.channel, text: "Your favorite team is #{v.nil? ? '' : 'now '}*#{target_user.favorite_team}*, #{target_user.slack_mention}.", gif: "#{target_user.favorite_team}")
+            logger.info "SET: #{client.owner} - #{user.user_name} favorite team #{target_user == user ? '' : ' for ' + target_user.user_name}is #{target_user.favorite_team}"
+          end
+        end
+
         def unset_nickname(client, data, user, v)
           target_user = user
           slack_mention = v.split.first if v
@@ -188,6 +210,8 @@ module SlackGamebot
             set_nickname client, data, user, v
           when 'avatar' then
             set_avatar client, data, user, v
+          when 'team' then
+            set_favorite_team client, data, user, v
           when 'gifs' then
             set_gifs client, data, user, v
           when 'unbalanced' then

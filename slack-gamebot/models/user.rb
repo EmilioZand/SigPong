@@ -22,6 +22,8 @@ class User
   field :nickname, type: String
   field :avatar, type: String
   field :favorite_team, type: String
+  field :most_played_team, type: String
+
 
   belongs_to :team, index: true
   validates_presence_of :team
@@ -244,12 +246,12 @@ class User
         team.update_attributes!(losses: (team.losses+1), played: (team.played+1))
       end
     end
-    determine_favorite_team!
+    determine_most_played_team!
   end
 
-  def determine_favorite_team!
+  def determine_most_played_team!
     team = UserTeam.where(user: self).order_by(played: :desc).limit(1).first
-    update_attributes!(favorite_team: team.team_name) unless team.nil?
+    update_attributes!(most_played_team: team.team_name) unless team.nil?
   end
 
   def self.rank_section(team, users)
