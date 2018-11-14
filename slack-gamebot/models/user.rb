@@ -35,6 +35,10 @@ class User
   index(ties: 1, team_id: 1)
   index(elo: 1, team_id: 1)
   index(games: 1, team_id: 1)
+  index(most_played_team: 1, team_id: 1)
+  index(current_streak: 1, team_id: 1)
+  index(current_streak_is_win: 1, team_id: 1)
+
 
   before_save :update_elo_history!
   before_save :update_game_count!
@@ -235,9 +239,9 @@ class User
     team = UserTeam.where(user: self, team_name: team_played).first
     if(team.nil?)
       if(won)
-        UserTeam.create!(user: self, team_name: team_played, wins: 1, played: 1)
+        UserTeam.create!(team: self.team, user: self, user_name: self.user_name, team_name: team_played, wins: 1, played: 1)
       else
-        UserTeam.create!(user: self, team_name: team_played, losses: 1, played: 1)
+        UserTeam.create!(team: self.team, user: self, user_name: self.user_name, team_name: team_played, losses: 1, played: 1)
       end
     else
       if(won)

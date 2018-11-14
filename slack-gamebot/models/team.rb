@@ -18,6 +18,7 @@ class Team
   has_many :matches, dependent: :destroy
   has_many :challenges, dependent: :destroy
   has_many :reports, dependent: :destroy
+  has_many :user_teams, dependent: :destroy
 
   belongs_to :game
 

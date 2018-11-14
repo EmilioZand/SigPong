@@ -1,7 +1,10 @@
 class UserTeam
     include Mongoid::Document
-  
-    belongs_to :user
+
+    SORT_ORDERS = ['created_at', '-created_at']
+
+    belongs_to :user, index: true
+    belongs_to :team, index: true
   
     field :user_name, type: String
     field :team_name, type: String
