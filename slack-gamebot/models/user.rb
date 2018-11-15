@@ -35,9 +35,6 @@ class User
   index(ties: 1, team_id: 1)
   index(elo: 1, team_id: 1)
   index(games: 1, team_id: 1)
-  index(most_played_team: 1, team_id: 1)
-  index(current_streak: 1, team_id: 1)
-  index(current_streak_is_win: 1, team_id: 1)
 
 
   before_save :update_elo_history!
